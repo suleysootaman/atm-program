@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple ATM Program</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #eef2f3; }
+    .atm-container {
+      background: #fff;
+      border-radius: 10px;
+      width: 320px;
+      margin: 60px auto;
+      padding: 30px 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    .atm-container h2 { text-align: center; }
+    .atm-container input, .atm-container button {
+      width: 95%;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 1em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .atm-container button { background: #0077cc; color: #fff; border: none; cursor: pointer; }
+    .atm-container button:hover { background: #005fa3; }
+    .atm-container .result { margin: 15px 0; font-size: 1.2em; }
+  </style>
+</head>
+<body>
+  <div class="atm-container">
+    <h2>ATM Simulator</h2>
+    <div class="result" id="result"></div>
+    <button onclick="checkBalance()">Check Balance</button>
+    <br>
+    <input type="number" id="depositAmount" placeholder="Deposit Amount">
+    <button onclick="deposit()">Deposit</button>
+    <br>
+    <input type="number" id="withdrawAmount" placeholder="Withdraw Amount">
+    <button onclick="withdraw()">Withdraw</button>
+  </div>
+  <script>
+    let balance = 1000; // Initial balance
+
+    function checkBalance() {
+      document.getElementById('result').textContent = "Current Balance: $" + balance.toFixed(2);
+    }
+
+    function deposit() {
+      let deposit = parseFloat(document.getElementById('depositAmount').value);
+      if (isNaN(deposit) || deposit <= 0) {
+        document.getElementById('result').textContent = "Enter a valid deposit amount.";
+        return;
+      }
+      balance += deposit;
+      document.getElementById('result').textContent = "Deposited $" + deposit.toFixed(2) + ". New Balance: $" + balance.toFixed(2);
+      document.getElementById('depositAmount').value = "";
+    }
+
+    function withdraw() {
+      let withdraw = parseFloat(document.getElementById('withdrawAmount').value);
+      if (isNaN(withdraw) || withdraw <= 0) {
+        document.getElementById('result').textContent = "Enter a valid withdraw amount.";
+        return;
+      }
+      if (withdraw > balance) {
+        document.getElementById('result').textContent = "Insufficient funds.";
+        return;
+      }
+      balance -= withdraw;
+      document.getElementById('result').textContent = "Withdrew $" + withdraw.toFixed(2) + ". New Balance: $" + balance.toFixed(2);
+      document.getElementById('withdrawAmount').value = "";
+    }
+  </script>
+</body>
+</html>
